@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
-import fitz  # PyMuPDF
+import pymupdf
 import re
 
 app = FastAPI()
@@ -13,7 +13,7 @@ async def procesar_pdf(file: UploadFile = File(...)):
     try:
         # 1. Leer el PDF directamente desde la memoria
         contenido = await file.read()
-        doc = fitz.open("pdf", contenido)
+        doc = pymupdf.open("pdf", contenido)
         texto = ""
         for pagina in doc:
             texto += pagina.get_text()
